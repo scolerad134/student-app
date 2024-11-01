@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * Репозиторий для работы с Student.
  */
-@Repository
 public interface StudentRepository {
 
     /**

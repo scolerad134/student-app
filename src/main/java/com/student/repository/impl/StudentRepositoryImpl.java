@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+/**
+ * Реализация {@link StudentRepository}.
+ */
 @Repository
 @RequiredArgsConstructor
 @Slf4j
@@ -23,6 +27,7 @@ public class StudentRepositoryImpl implements StudentRepository {
      */
     @Override
     public List<Student> findAll() {
+        log.info("Find all students");
         String sql = "SELECT * FROM students";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
             rs.getLong("id"),
@@ -41,6 +46,7 @@ public class StudentRepositoryImpl implements StudentRepository {
      */
     @Override
     public int save(Student student) {
+        log.info("Save student {}", student);
         String sql = "INSERT INTO students" +
             "(first_name, last_name, middle_name, date_of_birth, group_name, unique_number)" +
             "VALUES (?, ?, ?, ?, ?, ?)";
@@ -56,6 +62,7 @@ public class StudentRepositoryImpl implements StudentRepository {
      */
     @Override
     public int deleteStudentByUniqueNumber(String uniqueNumber) {
+        log.info("Delete student with unique number {}", uniqueNumber);
         String sql = "DELETE FROM students WHERE unique_number = ?";
         return jdbcTemplate.update(sql, uniqueNumber);
     }
