@@ -31,9 +31,9 @@ public class StudentRepositoryImpl implements StudentRepository {
         String sql = "SELECT * FROM students";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Student(
             rs.getLong("id"),
-            rs.getString("first_name"),
-            rs.getString("last_name"),
-            rs.getString("middle_name"),
+            rs.getString("firstname"),
+            rs.getString("lastname"),
+            rs.getString("patronymic"),
             rs.getDate("date_of_birth").toLocalDate(),
             rs.getString("group_name"),
             rs.getString("unique_number")
@@ -47,7 +47,7 @@ public class StudentRepositoryImpl implements StudentRepository {
     public void save(Student student) {
         log.info("Save student {}", student);
         String sql = "INSERT INTO students" +
-            "(first_name, last_name, middle_name, date_of_birth, group_name, unique_number)" +
+            "(firstname, lastname, patronymic, date_of_birth, group_name, unique_number)" +
             "VALUES (?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sql, student.getFirstName(),
