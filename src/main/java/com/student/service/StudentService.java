@@ -1,7 +1,6 @@
 package com.student.service;
 
 import com.student.model.Student;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -16,17 +15,15 @@ public interface StudentService {
      *
      * @return список студентов
      */
-    List<Student> findAll();
+    List<Student> getAllStudents();
 
     /**
      * Сохранение студента.
-     *
      */
-    int save(Student student);
+    void addStudent(Student student);
 
     /**
      * Удаление студента по уникальному номеру.
-     *
      */
-    int deleteStudentByUniqueNumber(String uniqueNumber);
+    void deleteStudent(String uniqueNumber);
 }

@@ -21,7 +21,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     @Override
-    public List<Student> findAll() {
+    public List<Student> getAllStudents() {
         log.debug("findAll - start");
         List<Student> students = studentRepository.findAll();
         log.info("findAll - end");
@@ -29,14 +29,14 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int save(Student student) {
+    public void addStudent(Student student) {
         log.debug("save - start, student = {}", student);
-        return studentRepository.save(student);
+        studentRepository.save(student);
     }
 
     @Override
-    public int deleteStudentByUniqueNumber(String uniqueNumber) {
+    public void deleteStudent(String uniqueNumber) {
         log.debug("deleteStudentByUniqueNumber - start, uniqueNumber = {}", uniqueNumber);
-        return studentRepository.deleteStudentByUniqueNumber(uniqueNumber);
+        studentRepository.deleteStudentByUniqueNumber(uniqueNumber);
     }
 }

@@ -42,28 +42,26 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     /**
      * Сохраняет студента.
-     *
      */
     @Override
-    public int save(Student student) {
+    public void save(Student student) {
         log.info("Save student {}", student);
         String sql = "INSERT INTO students" +
             "(first_name, last_name, middle_name, date_of_birth, group_name, unique_number)" +
             "VALUES (?, ?, ?, ?, ?, ?)";
 
-        return jdbcTemplate.update(sql, student.getFirstName(),
+        jdbcTemplate.update(sql, student.getFirstName(),
             student.getLastName(), student.getPatronymic(),
             student.getDateOfBirth(), student.getGroupName(), student.getUniqueNumber());
     }
 
     /**
      * Удаляет студента по уникальному номеру.
-     *
      */
     @Override
-    public int deleteStudentByUniqueNumber(String uniqueNumber) {
+    public void deleteStudentByUniqueNumber(String uniqueNumber) {
         log.info("Delete student with unique number {}", uniqueNumber);
         String sql = "DELETE FROM students WHERE unique_number = ?";
-        return jdbcTemplate.update(sql, uniqueNumber);
+        jdbcTemplate.update(sql, uniqueNumber);
     }
 }

@@ -1,7 +1,6 @@
 package com.student.repository;
 
 import com.student.model.Student;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -19,13 +18,11 @@ public interface StudentRepository {
 
     /**
      * Метод для добавления студента.
-     *
      */
-    int save(Student student);
+    void save(Student student);
 
     /**
      * Метод для удаления студента по уникальному номеру.
-     *
      */
-    int deleteStudentByUniqueNumber(String uniqueNumber);
+    void deleteStudentByUniqueNumber(String uniqueNumber);
 }
