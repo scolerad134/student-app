@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+</head>
+<body>
+<h1>Student Management</h1>
+
+<h2>Add Student</h2>
+<form id="studentForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required><br>
+
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" required><br>
+
+    <label for="patronymic">Patronymic:</label>
+    <input type="text" id="patronymic"><br>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" required><br>
+
+    <label for="group">Group:</label>
+    <input type="text" id="group" required><br>
+
+    <label for="uniqueNumber">Unique Number:</label>
+    <input type="text" id="uniqueNumber" required><br>
+
+    <button type="button" onclick="addStudent()">Add Student</button>
+</form>
+
+<h2>Student List</h2>
+<button onclick="getAllStudents()">Refresh List</button>
+<ul id="studentList"></ul>
+
+<h2>Delete Student</h2>
+<label for="deleteUniqueNumber">Unique Number:</label>
+<input type="text" id="deleteUniqueNumber" required>
+<button onclick="deleteStudent()">Delete</button>
+
+<script>
+    const apiUrl = "/api/v1/students";
+
+    function getAllStudents() {
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById("studentList");
+                list.innerHTML = "";
+                data.forEach(student => {
+                    const item = document.createElement("li");
+                    item.textContent = `${student.name} ${student.surname}, Group: ${student.group}, Unique Number: ${student.uniqueNumber}`;
+                    list.appendChild(item);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function addStudent() {
+        const student = {
+            name: document.getElementById("name").value,
+            surname: document.getElementById("surname").value,
+            patronymic: document.getElementById("patronymic").value,
+            dob: document.getElementById("dob").value,
+            group: document.getElementById("group").value,
+            uniqueNumber: document.getElementById("uniqueNumber").value
+        };
+
+        fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(student)
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+                getAllStudents();
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function deleteStudent() {
+        const uniqueNumber = document.getElementById("deleteUniqueNumber").value;
+
+        fetch(`${apiUrl}/${uniqueNumber}`, {
+            method: "DELETE"
+        })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+                getAllStudents();
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+</body>
+</html>
